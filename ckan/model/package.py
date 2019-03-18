@@ -52,17 +52,15 @@ package_table = Table('package', meta.metadata,
         Column('metadata_created', types.DateTime, default=datetime.datetime.utcnow),
         Column('metadata_modified', types.DateTime, default=datetime.datetime.utcnow),
         Column('private', types.Boolean, default=False),
+        Column('state', types.UnicodeText, default=core.State.ACTIVE),
 )
 
-
-vdm.sqlalchemy.make_table_stateful(package_table)
 
 ## -------------------
 ## Mapped classes
 
-class Package(
-        vdm.sqlalchemy.StatefulObjectMixin,
-        domain_object.DomainObject):
+class Package(core.StatefulObjectMixin,
+              domain_object.DomainObject):
 
     text_search_fields = ['name', 'title']
 
